@@ -1,0 +1,14 @@
+{
+  "name": "app_lost_udea",
+  "version": "1.0.0",
+  "description": "reportar y buscar objetos perdidos en la udea",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dolly Jimenez, Paula Maldonado, Angie Castañeda",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
