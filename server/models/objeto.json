@@ -1,0 +1,56 @@
+{
+  "name": "objeto",
+  "plural": "objeto",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "nombreObjeto": {
+      "type": "string",
+      "required": true
+    },
+    "fechaEncontrado": {
+      "type": "date",
+      "required": true
+    },
+    "imagen": {
+      "type": "string",
+      "required": true
+    },
+    "lugarEncontrado": {
+      "type": "string"
+    },
+    "estado": {
+      "type": "string",
+      "required": true
+    },
+    "detalleEntregaId": {
+      "type": "detalleEntrega"
+    },
+    "observaciones": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "categorias": {
+      "type": "belongsTo",
+      "model": "categoria",
+      "foreignKey": ""
+    },
+    "lugarDeReclamo": {
+      "type": "belongsTo",
+      "model": "lugarReclamo",
+      "foreignKey": ""
+    },
+    "usuarios": {
+      "type": "belongsTo",
+      "model": "usuario",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

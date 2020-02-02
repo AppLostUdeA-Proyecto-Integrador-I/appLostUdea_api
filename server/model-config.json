@@ -1,0 +1,36 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "usuario": {
+    "dataSource": "Firestore",
+    "public": true
+  },
+  "categoria": {
+    "dataSource": "Firestore",
+    "public": true
+  },
+  "lugarReclamo": {
+    "dataSource": "Firestore",
+    "public": true
+  },
+  "detalleEntrega": {
+    "dataSource": "Firestore",
+    "public": false
+  },
+  "objeto": {
+    "dataSource": "Firestore",
+    "public": true
+  }
+}
