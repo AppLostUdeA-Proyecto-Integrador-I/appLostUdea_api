@@ -6,15 +6,32 @@ class ServicioObjeto{
   }
 
   encontrarObjetos(filtro,cb){
-    let refColeccion = this.bd.collection(OBJETOS_MODELO);
+    let consulta = this.bd.collection(OBJETOS_MODELO);
 
-    var atributo  = [];
     filtro.forEach(elemento => {
-     atributo.push(Object.keys(elemento));
-     console.log(atributo);
+     var llave = Object.keys(elemento)[0];
+     var condicion = elemento[llave];
+     var operador = Object.keys(condicion)[0];
+     var valor = condicion[operador];
+     console.log(llave);
+     console.log(operador);
+     console.log(valor);
+     consulta = consulta.where(llave, operador, valor);
     });
-    cb(atributo);
-
+    consulta.get().then(function (resultado){
+      let objetos = [];
+      resultado.forEach(function (objeto){
+        objeto.data().id = objeto.id;
+        objetos.push(objeto.data());
+      });
+      cb(objetos);
+    }).catch((err)=> {
+      if (err) {
+      console.log(err);
+      } else{
+        console.log("Error obteniendo los datos");
+      }
+    });
   }
 }
 module.exports = ServicioObjeto;
