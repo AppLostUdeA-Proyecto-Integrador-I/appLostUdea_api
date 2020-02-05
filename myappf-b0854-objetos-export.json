@@ -1,0 +1,93 @@
+[ {
+  "categoria" : "equipo deportivo",
+  "encontrado_por" : "Dolly jimenez",
+  "estado" : {
+    "tipo" : "reportado"
+  },
+  "fecha_encontrado" : "08/12/2019",
+  "id" : "ed1",
+  "imagen" : "https://firebasestorage.googleapis.com/v0/b/myappf-b0854.appspot.com/o/balon.jpg?alt=media&token=c74282e1-244e-438a-8f4d-ebe5c3e27b7b",
+  "lugar_encontrado" : "bloque 5",
+  "lugar_reclamo" : "no disponible",
+  "nombre_objeto" : "balón de voleibol",
+  "observaciones" : "balón en buen estado",
+  "usuario_cc" : 1017289800,
+  "usuario_email" : "dolly.jimenez@udea.edu.co",
+  "usuario_telefono" : 3128976654
+}, {
+  "categoria " : "documento de identidad",
+  "encontrado_por" : "laura daniela erazo",
+  "estado" : {
+    "tipo" : "reportado"
+  },
+  "fecha_encontrado" : "14/12/2019",
+  "id" : "di1",
+  "imagen" : "https://firebasestorage.googleapis.com/v0/b/myappf-b0854.appspot.com/o/cc.jpg?alt=media&token=d150e819-fe7b-4510-b13a-b49609d73639",
+  "lugar_encontrado" : "biblioteca",
+  "lugar_reclamo" : "no disponible",
+  "nombre_objeto" : "cédula",
+  "observaciones" : "ninguna",
+  "usuario_cc" : 1017235600,
+  "usuario_email" : "laura.erazo@udea.edu.co",
+  "usuario_telefono" : 3128974563
+}, {
+  "categoria" : "pc/tablet/celular",
+  "encontrado_por" : "Tatiana Maldonado",
+  "estado" : {
+    "cc" : 1017271400,
+    "email" : "sebastian.pelaez@udea.edu.co",
+    "entregado_a" : "Juan Sebastián Pelaez",
+    "fecha_entrega" : "13/12/2019",
+    "hora_entrega" : "10:10",
+    "telefono" : 3128970036,
+    "tipo" : "entregado"
+  },
+  "fecha_encontrado" : "11/12/2019",
+  "id" : "pc1",
+  "imagen" : "https://firebasestorage.googleapis.com/v0/b/myappf-b0854.appspot.com/o/portatil.jpg?alt=media&token=f605e524-001e-48b4-8310-e1f3db4de8e9",
+  "lugar_encontrado" : "biblioteca",
+  "lugar_reclamo" : "bloque 28",
+  "nombre_objeto" : "portatil",
+  "observaciones" : "ninguna",
+  "usuario_cc" : 1017351500,
+  "usuario_email" : "tatiana.maldonado@udea.edu.co",
+  "usuario_telefono" : 3128930036
+}, {
+  "categoria" : "objetos personales",
+  "encontrado_por" : "paula maldonado pamplona",
+  "estado" : {
+    "cc" : 1017234566,
+    "email" : "dolly.jimenez@udea.edu.co",
+    "entregado_a" : "Dolly Jimenez Cifuente",
+    "fecha_entrega" : "05/12/2019",
+    "hora_entrega" : "15:16",
+    "telefono" : 3128930072,
+    "tipo" : "entregado"
+  },
+  "fecha_encontrado" : "01/12/2019",
+  "id" : "op1",
+  "imagen" : "https://firebasestorage.googleapis.com/v0/b/myappf-b0854.appspot.com/o/billetera.jpg?alt=media&token=1335179c-026f-472a-95a5-39fa46399d99",
+  "lugar_encontrado" : "biblioteca",
+  "lugar_reclamo" : "biblioteca",
+  "nombre_objeto" : "billetera",
+  "observaciones" : "dentro de la billetera no había dinero ni documentos, estaba completamente vacía.",
+  "usuario_cc" : 1017256745,
+  "usuario_email" : "andrea.maldonado@udea.edu.co",
+  "usuario_telefono" : 3128930072
+}, {
+  "categoría" : "documento de identidad",
+  "encontrado_por" : "Angie Castañeda Martinez",
+  "estado" : {
+    "tipo" : "pendiente"
+  },
+  "fecha_encontrado" : "27/01/2020",
+  "id" : "di2",
+  "imagen" : "https://firebasestorage.googleapis.com/v0/b/myappf-b0854.appspot.com/o/cc.jpg?alt=media&token=d150e819-fe7b-4510-b13a-b49609d73639",
+  "lugar_encontrado" : "bloque 5",
+  "lugar_reclamo" : "bloque 28",
+  "nombre_objeto" : "cédula",
+  "observaciones" : "ninguna",
+  "usuario_cc" : 1017251800,
+  "usuario_email" : "angie.castaneda@udea.edu.co",
+  "usuario_telefono" : 3128937654
+} ]
