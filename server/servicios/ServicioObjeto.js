@@ -33,5 +33,15 @@ class ServicioObjeto{
       }
     });
   }
+
+  crear(data, cb) {
+    this.bd.collection(OBJETOS_MODELO).add(data).then(obj => {
+      cb(null,obj.id);
+    }).catch(err =>{
+      console.log(err);
+      cb(err,null);
+    });
+
+  }
 }
 module.exports = ServicioObjeto;

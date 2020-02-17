@@ -1,11 +1,9 @@
 var ServicioObjeto = require("../servicios/ServicioObjeto");
-const admin = require("firebase-admin");
 const Notificaciones = require("../notificaciones/notificaciones");
-
 
 module.exports = function(app) {
   var Objeto = app.models.Objeto;
-  var find = Objeto.find;
+  var crear = Objeto.create;
   var cache = {};
   var servicioObjeto = new ServicioObjeto(Objeto.getDataSource().connector.db);
 
@@ -25,9 +23,22 @@ module.exports = function(app) {
       console.log(filter);
       servicioObjeto.encontrarObjetos(filter.filtros, resultado => {
         console.log("Servicio llamado exitosamente");
-        Notificaciones.enviarNotificacion({titulo:'cualquier cosa', texto: 'llego la notificacioooon!'});
         cb(null, resultado);
       });
     }
+  };
+
+  Objeto.create = function(data, arg, cb) {
+    servicioObjeto.crear(data, function(err, obj) {
+      if (err) {
+        cb(err, null);
+      } else {
+        Notificaciones.enviarNotificacion({
+          titulo: "Se reportó un nuevo objeto:",
+          texto: data.nombreObjeto
+        });
+        cb(null, obj);
+      }
+    });
   };
 };
