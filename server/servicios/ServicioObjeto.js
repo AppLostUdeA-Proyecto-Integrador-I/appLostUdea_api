@@ -1,4 +1,5 @@
 const OBJETOS_MODELO = 'objeto';
+var constructorConsulta = require('../util/ConstructorConsultaUtil');
 
 class ServicioObjeto{
   constructor(conexionBd){
@@ -8,30 +9,23 @@ class ServicioObjeto{
   encontrarObjetos(filtro,cb){
     let consulta = this.bd.collection(OBJETOS_MODELO);
 
-    filtro.forEach(elemento => {
-     var llave = Object.keys(elemento)[0];
-     var condicion = elemento[llave];
-     var operador = Object.keys(condicion)[0];
-     var valor = condicion[operador];
-     console.log(llave);
-     console.log(operador);
-     console.log(valor);
-     consulta = consulta.where(llave, operador, valor);
-    });
-    consulta.get().then(function (resultado){
-      let objetos = [];
-      resultado.forEach(function (objeto){
-        objeto.data().id = objeto.id;
-        objetos.push(objeto.data());
+    constructorConsulta.construirConFiltros(consulta,filtro, (consultaFinal) => {
+      consultaFinal.get().then(function (resultado){
+        let objetos = [];
+        resultado.forEach(function (objeto){
+          objeto.data().id = objeto.id;
+          objetos.push(objeto.data());
+        });
+        cb(objetos);
+      }).catch((err)=> {
+        if (err) {
+          console.log(err);
+        } else{
+          console.log("Error obteniendo los datos");
+        }
       });
-      cb(objetos);
-    }).catch((err)=> {
-      if (err) {
-      console.log(err);
-      } else{
-        console.log("Error obteniendo los datos");
-      }
-    });
+    })
+
   }
 
   crear(data, cb) {
