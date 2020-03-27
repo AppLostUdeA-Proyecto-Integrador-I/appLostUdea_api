@@ -50,8 +50,8 @@ module.exports = function(app) {
         cb(err, null);
       } else {
         Notificaciones.enviarNotificacion({
-          titulo: "Se reportó un nuevo objeto:",
-          texto: data.nombreObjeto
+          title: "Se reportó un nuevo objeto:",
+          body: data.nombreObjeto
         });
         cb(null, obj);
       }
