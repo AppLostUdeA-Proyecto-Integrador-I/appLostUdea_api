@@ -32,5 +32,17 @@
   "objeto": {
     "dataSource": "Firestore",
     "public": true
+  },
+  "notificacion": {
+    "dataSource": "Firestore",
+    "public": true
+  },
+  "usuarioXnotificacion": {
+    "dataSource": "Firestore",
+    "public": false
+  },
+  "token": {
+    "dataSource": "Firestore",
+    "public": true
   }
 }

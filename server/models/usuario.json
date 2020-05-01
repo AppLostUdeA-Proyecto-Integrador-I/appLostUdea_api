@@ -13,10 +13,11 @@
     },
     "tipo_identificacion": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "numIdentificacion": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "correo": {
       "type": "string",

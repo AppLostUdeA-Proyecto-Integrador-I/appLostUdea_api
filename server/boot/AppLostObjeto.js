@@ -1,6 +1,4 @@
-/**
- * Clase que sobreescribe los métodos remotos para el modelo Objeto
- */
+//Clase AppLostObjeto: Sobreescribe los métodos remotos para el modelo Objeto
 
 var ServicioObjeto = require("../servicios/ServicioObjeto");
 const Notificaciones = require("../notificaciones/notificaciones");

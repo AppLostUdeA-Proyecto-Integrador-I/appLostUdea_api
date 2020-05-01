@@ -1,0 +1,30 @@
+{
+  "name": "usuarioXnotificacion",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "leido": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "usuario": {
+      "type": "belongsTo",
+      "model": "usuario",
+      "foreignKey": ""
+    },
+    "notificacion": {
+      "type": "belongsTo",
+      "model": "notificacion",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
