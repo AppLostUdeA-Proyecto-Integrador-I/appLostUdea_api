@@ -24,9 +24,9 @@ module.exports = function (Usuario) {
     });
   };
 
-  Usuario.obtenerNotificaciones = function (id,leido, cb) {
+  Usuario.obtenerNotificaciones = function (correo,leido, cb) {
     var servicioNotificacion = new ServicioNotificacion();
-    servicioNotificacion.obtenerNotificaciones(id,leido,(err,notificaciones)=>{
+    servicioNotificacion.obtenerNotificaciones(correo,leido,(err,notificaciones)=>{
       if(err){
         cb(err,null)
       }else{
@@ -48,11 +48,11 @@ module.exports = function (Usuario) {
   Usuario.remoteMethod(
     'obtenerNotificaciones', {
       http: {
-        path: '/:id/notificaciones',
+        path: '/:correo/notificaciones',
         verb: 'get'
       },
       accepts: [
-        {arg: 'id', type: 'string', required: true},
+        {arg: 'correo', type: 'string', required: true},
         {arg: 'leido', type: 'boolean', required: false, http: {source: 'query'}}
       ],
       returns: {

@@ -26,6 +26,11 @@
     "rol": {
       "type": "string",
       "required": true
+    },
+    "permiteNotificaciones": {
+      "type": "boolean",
+      "required": true,
+      "default": false
     }
   },
   "validations": [],

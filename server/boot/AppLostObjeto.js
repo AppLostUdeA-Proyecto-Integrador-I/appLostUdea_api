@@ -17,12 +17,14 @@ module.exports = function(app) {
   Objeto.find = function(filter, arg, cb) {
     var key = "";
     var filtros;
+    /*
     if (filter) {
       key = JSON.stringify(filter);
       if(filter.filtros){
         filtros = filter.filtros;
       }
     }
+    */
     var cachedResults = cache[key];
     if (cachedResults) {
       console.log("serving from cache");
@@ -31,7 +33,7 @@ module.exports = function(app) {
       });
     } else {
       console.log("serving from db");
-      servicioObjeto.encontrarObjetos(filtros, resultado => {
+      servicioObjeto.encontrarObjetos(filter, resultado => {
         console.log("Servicio llamado exitosamente");
         cb(null, resultado);
       });

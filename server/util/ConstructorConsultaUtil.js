@@ -1,5 +1,12 @@
-exports.construirConFiltros = function (consulta,filtro,cb){
-  if(filtro && filtro != null){
+
+const admin = require("firebase-admin");
+
+exports.construirConFiltros = function (consulta,filter,cb){
+  var db = admin.firestore();
+
+  //filtros
+  if(filter && filter.filtros && filter.filtros != null){
+    let filtro = filter.filtros
     filtro.forEach(elemento => {
       var llave = Object.keys(elemento)[0];
       var condicion = elemento[llave];
@@ -8,7 +15,25 @@ exports.construirConFiltros = function (consulta,filtro,cb){
       consulta = consulta.where(llave, operador, valor);
      });
   }
-  cb(consulta);
+
+
+  //paginacion
+  if(filter && filter.paginacion && filter.paginacion != null){
+    let pag = filter.paginacion
+    if(pag.ultimoElemento){
+      let docRef = db.collection('objeto').doc(pag.ultimoElemento)
+      docRef.get().then(snapshot => {
+        cb(consulta,snapshot);
+        return
+      })
+    }else{
+      console.log(consulta)
+      cb(consulta)
+    }
+
+  }else{
+    cb(consulta)
+  }
 }
 
 

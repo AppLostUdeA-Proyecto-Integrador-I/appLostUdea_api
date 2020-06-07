@@ -9,12 +9,20 @@ class ServicioObjeto{
   encontrarObjetos(filtro,cb){
     let consulta = this.bd.collection(OBJETOS_MODELO);
 
-    constructorConsulta.construirConFiltros(consulta,filtro, (consultaFinal) => {
+    constructorConsulta.construirConFiltros(consulta,filtro, (consultaFinal,ultimo) => {
+      //Se ordena por fecha descendente y paginacion de
+      if(ultimo){
+        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc').startAfter(ultimo).limit(3)
+      }else{
+        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc').limit(3)
+
+      }
       consultaFinal.get().then(function (resultado){
         let objetos = [];
         resultado.forEach(function (objeto){
-          objeto.data().id = objeto.id;
-          objetos.push(objeto.data());
+          let data = objeto.data()
+          data.id = objeto.id;
+          objetos.push(data);
         });
         cb(objetos);
       }).catch((err)=> {

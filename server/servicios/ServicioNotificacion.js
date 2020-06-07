@@ -1,12 +1,16 @@
 var app = require("../../server/server");
 const admin = require("firebase-admin");
 const USUARIOXNOTIFICACION_COLECCION = "usuarioXnotificacion";
+var ServicioUsuario = require("../servicios/ServicioUsuario");
+
+//clase que realizar operaciones a la BD
 
 class ServicioNotificacion {
   constructor() {
     this.bd = admin.firestore();
   }
 
+  //Método que guarda la notificación en la BD, en el modelo notificacion.
   guardarNotificacion(notificacion, cb) {
     var notificacionModel = app.models.notificacion;
     notificacionModel.create(notificacion, (err, modelo) => {
@@ -19,14 +23,17 @@ class ServicioNotificacion {
     });
   }
 
-  asociarNotificacionAUsuarios(idNotificacion) {
-    var usuarioModel = app.models.Usuario;
-    var usuarioXnotificacionModel = app.models.usuarioXnotificacion;
 
-    usuarioModel.find((err, usuarios) => {
-      usuarios.forEach((usuario) => {
+ // Método que asocia la notificación con cada usuario. Se almacena en el modelo usuarioXnotificaciones
+  asociarNotificacionAUsuarios(idNotificacion,usuariosConPermisos,cb) {
+    var usuarioXnotificacionModel = app.models.usuarioXnotificacion;
+    const servicioUsuario = new ServicioUsuario();
+    var usuarioXNotificacionLista = [];
+
+    servicioUsuario.encontrarUsuarios(usuariosConPermisos,(err, correosLista) => {
+      correosLista.forEach((id, ind, array) => {
         var usuarioXnotificacion = {
-          usuarioId: usuario.id,
+          usuarioId: id,
           notificacionId: idNotificacion,
           leido: false,
         };
@@ -42,6 +49,11 @@ class ServicioNotificacion {
                   " " +
                   err
               );
+            }else{
+              usuarioXNotificacionLista.push(modelo)
+            }
+            if (ind == array.length - 1 && cb) {
+              cb(usuarioXNotificacionLista);
             }
           }
         );
@@ -49,17 +61,17 @@ class ServicioNotificacion {
     });
   }
 
-  /*Metodo que retorna en su callback "cb" las notificiaciones que pertenecen a un "usuarioId",
+  /*Metodo que retorna en su callback "cb" las notificiaciones que pertenecen a un "correo",
   o las notificiones leidas o no leidas por medio del parametro opcional "leido"   */
-  obtenerNotificaciones(usuarioId, leido, cb) {
+  obtenerNotificaciones(correo, leido, cb) {
     var notificacionModel = app.models.notificacion;
-    var usuario = app.models.usuario;
+    const servicioUsuario = new ServicioUsuario();
     var notificaciones = [];
     var notificacionesData = [];
 
-    usuario.findById(usuarioId, (err, usuario) => {
+    servicioUsuario.encontrarUsuario(correo, (err, usuario) => {
       if (err) {
-        console.log("No se pudo obtener el usuario " + usuarioId + " " + err);
+        console.log("No se pudo obtener el usuario " + correo + " " + err);
       }
 
       if (usuario == undefined || usuario == null) {
@@ -68,7 +80,7 @@ class ServicioNotificacion {
       } else {
         var consulta = this.bd
           .collection(USUARIOXNOTIFICACION_COLECCION)
-          .where("usuarioId", "==", usuarioId);
+          .where("usuarioId", "==", usuario.correo);
 
         if (leido || leido != null) {
           consulta = consulta.where("leido", "==", leido);
@@ -83,7 +95,7 @@ class ServicioNotificacion {
               notificacionesId.forEach((res) => {
                 notificaciones.push(res.data().notificacionId);
               });
-
+              var numNotificaciones = 0;
               notificaciones.forEach((item, ind, array) => {
                 notificacionModel.findById(item, (err, notificacion) => {
                   if (err) {
@@ -96,7 +108,8 @@ class ServicioNotificacion {
                   } else {
                     notificacionesData.push(notificacion);
                   }
-                  if (ind == array.length - 1) {
+                  numNotificaciones++;
+                  if (numNotificaciones == array.length) {
                     cb(null, notificacionesData);
                   }
                 });
@@ -106,7 +119,7 @@ class ServicioNotificacion {
           .catch((err) => {
             console.log(
               "No se pudo retornar las notificaciones del usuario " +
-                usuarioId +
+                correo +
                 " " +
                 err
             );
