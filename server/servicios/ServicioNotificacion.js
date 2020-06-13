@@ -101,7 +101,7 @@ class ServicioNotificacion {
                   if (err) {
                     console.log(
                       "No se puede obtener la notificacion " +
-                        res.data().notificacionId +
+                        item +
                         " " +
                         err
                     );
@@ -110,6 +110,9 @@ class ServicioNotificacion {
                   }
                   numNotificaciones++;
                   if (numNotificaciones == array.length) {
+                    notificacionesData.forEach(n =>{
+                      n.fecha = n.fecha.toDate()
+                    })
                     cb(null, notificacionesData);
                   }
                 });

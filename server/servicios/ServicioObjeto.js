@@ -12,9 +12,9 @@ class ServicioObjeto{
     constructorConsulta.construirConFiltros(consulta,filtro, (consultaFinal,ultimo) => {
       //Se ordena por fecha descendente y paginacion de
       if(ultimo){
-        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc').startAfter(ultimo).limit(3)
+        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc').startAfter(ultimo)
       }else{
-        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc').limit(3)
+        consultaFinal = consultaFinal.orderBy('fechaEncontrado','desc')
 
       }
       consultaFinal.get().then(function (resultado){

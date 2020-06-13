@@ -20,6 +20,9 @@ exports.construirConFiltros = function (consulta,filter,cb){
   //paginacion
   if(filter && filter.paginacion && filter.paginacion != null){
     let pag = filter.paginacion
+    if(pag.limite){
+      consulta = consulta.limit(pag.limite)
+    }
     if(pag.ultimoElemento){
       let docRef = db.collection('objeto').doc(pag.ultimoElemento)
       docRef.get().then(snapshot => {

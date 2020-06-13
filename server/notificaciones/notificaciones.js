@@ -3,7 +3,6 @@ var ServicioToken = require("../servicios/ServicioToken");
 var ServicioNotificacion = require("../servicios/ServicioNotificacion");
 
 var app = require('../../server/server');
-const timestamp = require('time-stamp');
 
 //Envia las notificaciones usando Firebase Cloud Messaging
 exports.enviarNotificacion = (mensaje) => {
