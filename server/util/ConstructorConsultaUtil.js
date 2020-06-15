@@ -1,7 +1,7 @@
 
 const admin = require("firebase-admin");
 
-exports.construirConFiltros = function (consulta,filter,cb){
+exports.construirConFiltros = function (consulta,filter,coleccion,cb){
   var db = admin.firestore();
 
   //filtros
@@ -16,7 +16,9 @@ exports.construirConFiltros = function (consulta,filter,cb){
      });
   }
 
-
+  if(filter && filter.where && filter.where.id){
+    consulta = consulta.doc(filter.where.id)
+  }
   //paginacion
   if(filter && filter.paginacion && filter.paginacion != null){
     let pag = filter.paginacion
@@ -24,13 +26,12 @@ exports.construirConFiltros = function (consulta,filter,cb){
       consulta = consulta.limit(pag.limite)
     }
     if(pag.ultimoElemento){
-      let docRef = db.collection('objeto').doc(pag.ultimoElemento)
+      let docRef = db.collection(coleccion).doc(pag.ultimoElemento)
       docRef.get().then(snapshot => {
         cb(consulta,snapshot);
         return
       })
     }else{
-      console.log(consulta)
       cb(consulta)
     }
 

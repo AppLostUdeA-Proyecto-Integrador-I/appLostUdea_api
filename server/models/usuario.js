@@ -24,9 +24,9 @@ module.exports = function (Usuario) {
     });
   };
 
-  Usuario.obtenerNotificaciones = function (correo,leido, cb) {
+  Usuario.obtenerNotificaciones = function (correo,leido,paginacion, cb) {
     var servicioNotificacion = new ServicioNotificacion();
-    servicioNotificacion.obtenerNotificaciones(correo,leido,(err,notificaciones)=>{
+    servicioNotificacion.obtenerNotificaciones(correo,leido,paginacion,(err,notificaciones)=>{
       if(err){
         cb(err,null)
       }else{
@@ -53,7 +53,8 @@ module.exports = function (Usuario) {
       },
       accepts: [
         {arg: 'correo', type: 'string', required: true},
-        {arg: 'leido', type: 'boolean', required: false, http: {source: 'query'}}
+        {arg: 'leido', type: 'boolean', required: false, http: {source: 'query'}},
+        {arg: 'filter', type: 'object', required: false, http: {source: 'query'}}
       ],
       returns: {
         arg: 'notificaciones',

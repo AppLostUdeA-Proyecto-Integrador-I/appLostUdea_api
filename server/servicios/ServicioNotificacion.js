@@ -1,5 +1,7 @@
 var app = require("../../server/server");
 const admin = require("firebase-admin");
+var constructorConsulta = require('../util/ConstructorConsultaUtil');
+
 const USUARIOXNOTIFICACION_COLECCION = "usuarioXnotificacion";
 var ServicioUsuario = require("../servicios/ServicioUsuario");
 
@@ -35,7 +37,8 @@ class ServicioNotificacion {
         var usuarioXnotificacion = {
           usuarioId: id,
           notificacionId: idNotificacion,
-          leido: false,
+          fecha: Date.now(),
+          leido: false
         };
         usuarioXnotificacionModel.create(
           usuarioXnotificacion,
@@ -63,7 +66,7 @@ class ServicioNotificacion {
 
   /*Metodo que retorna en su callback "cb" las notificiaciones que pertenecen a un "correo",
   o las notificiones leidas o no leidas por medio del parametro opcional "leido"   */
-  obtenerNotificaciones(correo, leido, cb) {
+  obtenerNotificaciones(correo, leido,paginacion, cb) {
     var notificacionModel = app.models.notificacion;
     const servicioUsuario = new ServicioUsuario();
     var notificaciones = [];
@@ -86,26 +89,37 @@ class ServicioNotificacion {
           consulta = consulta.where("leido", "==", leido);
         }
 
-        consulta
+        constructorConsulta.construirConFiltros(consulta,paginacion,USUARIOXNOTIFICACION_COLECCION, (consultaFinal,ultimo) => {
+          if(ultimo){
+            consultaFinal = consultaFinal.orderBy('fecha','desc').startAfter(ultimo)
+          }else{
+            consultaFinal = consultaFinal.orderBy('fecha','desc')
+          }
+
+          consultaFinal
           .get()
           .then((notificacionesId) => {
             if (notificacionesId.empty) {
               cb(null, notificaciones);
             } else {
               notificacionesId.forEach((res) => {
-                notificaciones.push(res.data().notificacionId);
+                notificaciones.push({
+                  id: res.id,
+                  notificacionId: res.data().notificacionId
+                });
               });
               var numNotificaciones = 0;
               notificaciones.forEach((item, ind, array) => {
-                notificacionModel.findById(item, (err, notificacion) => {
+                notificacionModel.findById(item.notificacionId, (err, notificacion) => {
                   if (err) {
                     console.log(
                       "No se puede obtener la notificacion " +
-                        item +
+                        item.notificacionId +
                         " " +
                         err
                     );
                   } else {
+                    notificacion.id = item.id
                     notificacionesData.push(notificacion);
                   }
                   numNotificaciones++;
@@ -128,6 +142,8 @@ class ServicioNotificacion {
             );
             cb(err, null);
           });
+
+        })
       }
     });
   }
