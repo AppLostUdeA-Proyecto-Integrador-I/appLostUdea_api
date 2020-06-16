@@ -27,14 +27,11 @@ module.exports = function(app) {
     */
     var cachedResults = cache[key];
     if (cachedResults) {
-      console.log("serving from cache");
       process.nextTick(function() {
         cb(null, cachedResults);
       });
     } else {
-      console.log("serving from db");
       servicioObjeto.encontrarObjetos(filter, resultado => {
-        console.log("Servicio llamado exitosamente");
         cb(null, resultado);
       });
     }
