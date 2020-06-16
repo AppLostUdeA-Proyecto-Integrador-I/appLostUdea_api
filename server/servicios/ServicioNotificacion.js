@@ -120,7 +120,7 @@ class ServicioNotificacion {
                     );
                   } else {
                     notificacion.id = item.id
-                    notificacionesData.push(notificacion);
+                    notificacionesData[ind]= notificacion;
                   }
                   numNotificaciones++;
                   if (numNotificaciones == array.length) {
