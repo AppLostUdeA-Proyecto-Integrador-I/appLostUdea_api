@@ -1,5 +1,6 @@
 const OBJETOS_MODELO = "objeto";
 var constructorConsulta = require("../util/ConstructorConsultaUtil");
+const admin = require("firebase-admin");
 
 class ServicioObjeto {
   constructor(conexionBd) {
@@ -29,10 +30,16 @@ class ServicioObjeto {
             if (resultado.exists) {
               let data = resultado.data();
               data.id = resultado.id;
+              if(typeof data.fechaEncontrado !== "string"){
+                data.fechaEncontrado = data.fechaEncontrado.toDate()
+              }
               objetos.push(data);
             } else {
               resultado.forEach(function (objeto) {
                 let data = objeto.data();
+                if(typeof data.fechaEncontrado !== "string"){
+                  data.fechaEncontrado = data.fechaEncontrado.toDate()
+                }
                 data.id = objeto.id;
                 objetos.push(data);
               });
@@ -51,6 +58,7 @@ class ServicioObjeto {
   }
 
   crear(data, cb) {
+    data.fechaEncontrado =  admin.firestore.Timestamp.fromDate(new Date(data.fechaEncontrado))
     this.bd
       .collection(OBJETOS_MODELO)
       .add(data)
